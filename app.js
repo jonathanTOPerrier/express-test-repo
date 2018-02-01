@@ -38,7 +38,21 @@ app.get('/api/skole', (req, res) => {
         'Marie Mørk': 'Min Første skole... Virkelig dårlig',
         'FG': 'Mit Gymnasie, det var fint nok',
         'AFUK': 'Mega nice!!! :D produktionsskole',
-        'VUC NS': 'Det var mega tørt og kedeligt'
+        'VUC NS': 'Det var mega tørt og kedeligt',
+        'Web int': 'Verdensfedeste uddannelse'
+    });
+});
+
+app.get('/api/jobs', (req, res) => {
+    res.json({
+
+        'Feje dreng': 'Dette var mit første job i en børnehave',
+        'Bogindbinder': 'Dette job var mit andet arbejde som jeg havde samtidig med det første',
+        'Smykkesortere': 'Random kedeligt arbejde',
+        'Arbejdede i en bager': 'Nedern chef der var alt for atoiter',
+        'Arbejdsmand': 'Arbejdede som arbejdsmand for et kogt malerfirma',
+        'Køkkenassistent': 'Super stressende 200 timer + om ugen'
+
     });
 });
 
