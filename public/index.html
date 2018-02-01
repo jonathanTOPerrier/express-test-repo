@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+
+
+    <main>
+        <div id="content"></div>
+
+    </main>
+
+    <script>
+        fetch('http://localhost:1337/api/folk')
+            .then(response => {
+
+                return response.json();
+            })
+            .then(json => {
+
+                json.mennesker.forEach(element => {
+
+                    for (key in element) {
+                        let h1 = document.createElement('h1');
+                        h1.textContent = `${key} = ${element[key]}`;
+                        document.getElementById('content').appendChild(h1);
+                    }
+
+                });
+
+                console.log(json.dyr);
+
+                for (d in json.dyr) {
+                    let h1 = document.createElement('h1');
+                    h1.textContent = `${d} = ${json.dyr[d]}`;
+                    document.getElementById('content').appendChild(h1);
+                }
+
+
+            })
+            .catch(err => {
+                console.log(err);
+            }
+
+            );
+    </script>
+</body>
+
+</html>
