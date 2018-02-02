@@ -14,7 +14,7 @@
     <main>
         <a href="index.html">front</a>
         <a href="skoler.html">skoler</a>
-        <a href="jobs.html"></a>
+        <a href="jobs.html">jobs</a>
 
         <form>
             <p>Fornavn:
@@ -36,13 +36,23 @@
         button.addEventListener('click', () => {
 
 
+            let child = document.getElementById('content');
 
+            if (child != null) {
+
+                while (child.hasChildNodes()) {
+                    child.removeChild(child.childNodes[0]);
+                }
+            }
 
             let form = document.querySelector('form');
 
             if (form.fornavn.value == '' || form.efternavn.value == "") {
                 document.getElementById('alert').innerHTML = 'vær venlig at udfylde alle felterne';
             } else {
+
+
+
                 document.getElementById('alert').innerHTML = '';
                 let submitSettings = {
                     method: 'POST',

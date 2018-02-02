@@ -67,6 +67,28 @@ app.get('/api/test', (req, res) => {
     });
 });
 
+app.get('/api/search/:id', (req, res) => {
+    let mad = [
+        { "name": "jens", "work": "cleaner" },
+        { "name": "bob", "work": "chef" },
+        { "name": "henrik", "work": "slave" },
+        { "name": "bob", "work": "fisher" }
+    ];
+
+    let arr = [];
+
+    mad.forEach(element => {
+        if (element.name == req.params.id) {
+            arr.push(element);
+        }
+    })
+    if (arr.length == 0) {
+        arr.push({ "fejl": "det du søgte efter fandtes ikke" });
+    }
+    res.json(arr);
+
+});
+
 app.post('/api/formular', (req, res) => {
     res.json({
         besked: "data blev modtaget",
@@ -74,9 +96,6 @@ app.post('/api/formular', (req, res) => {
         efternavn: req.body.efternavn
     });
 });
-
-
-
 
 app.use(express.static('public'));
 

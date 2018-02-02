@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #fejl {
+            margin: 0 auto;
+            color: red;
+            font-size: 60px;
+            padding: 10%;
+            background-color: coral;
+            text-align: center;
+        }
+
+
+        }
+    </style>
+</head>
+
+<body>
+    <form>
+        <input name="soeg" placeholder="Søg efter et navn her">
+    </form>
+    <button id="sub">Søg</button>
+    <span id="alert" style="color:red"></span>
+    <div id="content"></div>
+</body>
+<script>
+
+    let button = document.querySelector('#sub');
+
+    button.addEventListener('click', () => {
+
+
+        let child = document.getElementById('content');
+
+        if (child != null) {
+
+            while (child.hasChildNodes()) {
+                child.removeChild(child.childNodes[0]);
+            }
+        }
+
+        let form = document.querySelector('form');
+
+        if (form.soeg.value == '') {
+            document.getElementById('alert').textContent = 'vær venlig at udfylde feltet';
+        } else {
+
+
+
+            document.getElementById('alert').textContent = '';
+
+
+            fetch('http://localhost:1337/api/search/' + form.soeg.value)
+                .then(response => {
+                    return response.json();
+                })
+                .then(json => {
+                    console.log(json);
+                    json.forEach(element => {
+
+                        if (element.fejl != undefined) {
+
+                            let div = document.createElement('div');
+                            div.setAttribute('id', 'fejl');
+                            let h1 = document.createElement('h1');
+                            h1.textContent = element.fejl;
+                            div.appendChild(h1);
+                            child.appendChild(div);
+
+                        } else {
+
+                            for (key in element) {
+                                let overskrift = document.createElement('h2');
+                                overskrift.textContent = `${key} = ${element[key]}`;
+                                child.appendChild(overskrift);
+                            }
+                        }
+                    });
+
+                })
+                .catch(err => {
+                    console.log(err);
+                });
+        }
+    });
+</script>
+
+</html>
