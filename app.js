@@ -4,6 +4,10 @@ const app = express();
 const logger = require('morgan');
 app.use(logger('dev'));
 
+const bodyParser = require('body-parser');
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
 app.get('/api/folk', (req, res) => {
 
     res.json({
@@ -55,6 +59,24 @@ app.get('/api/jobs', (req, res) => {
 
     });
 });
+
+app.get('/api/test', (req, res) => {
+    console.log(req.query);
+    res.json({
+        text: "Hello Worlds, et eller andet"
+    });
+});
+
+app.post('/api/formular', (req, res) => {
+    res.json({
+        besked: "data blev modtaget",
+        fornavn: req.body.fornavn,
+        efternavn: req.body.efternavn
+    });
+});
+
+
+
 
 app.use(express.static('public'));
 

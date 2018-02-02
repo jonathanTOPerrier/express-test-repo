@@ -14,43 +14,97 @@
     <main>
         <a href="index.html">front</a>
         <a href="skoler.html">skoler</a>
-        <a href="jobs"></a>
+        <a href="jobs.html"></a>
+
+        <form>
+            <p>Fornavn:
+                <input type="text" name="fornavn">
+            </p>
+            <p>Efternavn:
+                <input type="text" name="efternavn">
+            </p>
+        </form>
+        <button id="sub">Send</button>
+        <span id="alert" style="color : red"></span>
         <div id="content"></div>
     </main>
 
     <script>
-        fetch('http://localhost:1337/api/folk')
-            .then(response => {
 
-                return response.json();
-            })
-            .then(json => {
+        let button = document.querySelector('#sub');
 
-                json.mennesker.forEach(element => {
+        button.addEventListener('click', () => {
 
-                    for (key in element) {
-                        let h1 = document.createElement('h1');
-                        h1.textContent = `${key} = ${element[key]}`;
-                        document.getElementById('content').appendChild(h1);
-                    }
 
-                });
 
-                console.log(json.dyr);
 
-                for (d in json.dyr) {
-                    let h1 = document.createElement('h1');
-                    h1.textContent = `${d} = ${json.dyr[d]}`;
-                    document.getElementById('content').appendChild(h1);
+            let form = document.querySelector('form');
+
+            if (form.fornavn.value == '' || form.efternavn.value == "") {
+                document.getElementById('alert').innerHTML = 'vær venlig at udfylde alle felterne';
+            } else {
+                document.getElementById('alert').innerHTML = '';
+                let submitSettings = {
+                    method: 'POST',
+                    headers: new Headers({
+                        'Content-Type': 'application/json'
+                    }),
+                    body: JSON.stringify({
+                        fornavn: form.fornavn.value,
+                        efternavn: form.efternavn.value
+                    })
                 }
 
-
-            })
-            .catch(err => {
-                console.log(err);
+                fetch('http://localhost:1337/api/formular', submitSettings)
+                    .then(response => {
+                        return response.json();
+                    })
+                    .then(json => {
+                        console.log(json);
+                        for (key in json) {
+                            let h1 = document.createElement('h1');
+                            h1.textContent = `${key} = ${json[key]}`;
+                            document.getElementById('content').appendChild(h1);
+                        }
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    });
             }
+        });
 
-            );
+        // fetch('http://localhost:1337/api/folk')
+        //     .then(response => {
+
+        //         return response.json();
+        //     })
+        //     .then(json => {
+
+        //         json.mennesker.forEach(element => {
+
+        //             for (key in element) {
+        //                 let h1 = document.createElement('h1');
+        //                 h1.textContent = `${key} = ${element[key]}`;
+        //                 document.getElementById('content').appendChild(h1);
+        //             }
+
+        //         });
+
+        //         console.log(json.dyr);
+
+        //         for (d in json.dyr) {
+        //             let h1 = document.createElement('h1');
+        //             h1.textContent = `${d} = ${json.dyr[d]}`;
+        //             document.getElementById('content').appendChild(h1);
+        //         }
+
+
+        //     })
+        //     .catch(err => {
+        //         console.log(err);
+        //     }
+
+        //     );
     </script>
 </body>
 
