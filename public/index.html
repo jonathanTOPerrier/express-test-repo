@@ -74,7 +74,7 @@
                         console.log(json);
                         for (key in json) {
                             let h1 = document.createElement('h1');
-                            h1.textContent = `${key} = ${json[key]}`;
+                            h1.textContent = `${key} : ${json[key]}`;
                             document.getElementById('content').appendChild(h1);
                         }
                     })
